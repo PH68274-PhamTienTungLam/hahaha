@@ -147,13 +147,46 @@
     <div id="screen-1" class="container">
         <h1>Bạn là ai?</h1>
         <div class="btn-group">
-            <button id="btn-no"> Thu hà </button>
-            <button id="btn-yes" class="btn-pink"> Hà thối </button>
+            <button id="btn-no"> con người </button>
+            <button id="btn-yes" class="btn-pink"> not humam   }
+
+        .show-text { opacity: 1 !important; }
+        .heartbeat { animation: heartbeat 1.5s infinite; }
+
+        @keyframes heartbeat {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5rem; margin-bottom: 20px; }
+            button { padding: 12px 20px; font-size: 1rem; }
+            #final-message { font-size: 3rem; }
+            .btn-group { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="nhacNen.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="sfx-jump">
+        <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="screen-1" class="container">
+        <h1>Bạn là ai?</h1>
+        <div class="btn-group">
+            <button id="btn-no"> con người </button>
+            <button id="btn-yes" class="btn-pink"> not human </button>
         </div>
     </div>
 
     <div id="screen-2" class="container hidden">
-        <h1>Bạn có thực sự là hà thối không?<br></h1>
+        <h1>Bạn có thực sự là con người không?<br></h1>
         <input type="text" id="fake-input" placeholder="Nhập câu trả lời..." autocomplete="off">
         <br><br>
         <button id="btn-send" class="btn-pink">Gửi câu trả lời</button>
@@ -391,6 +424,7 @@
     </script>
 </body>
 </html>
+
 
 
 
