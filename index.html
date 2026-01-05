@@ -1,202 +1,210 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Gửi Ai đó</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden; 
-            background-color: #000;
-            font-family: 'Arial', sans-serif;
-            color: white;
-            user-select: none; 
-            touch-action: none;
-        }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #000;
+        font-family: "Arial", sans-serif;
+        color: white;
+        user-select: none;
+        touch-action: none;
+      }
 
-        /* --- CSS CHO PHẦN CÂU HỎI --- */
-        .container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            background: radial-gradient(circle, #2c001e 0%, #000000 100%);
-            transition: opacity 1s ease;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+      /* --- CSS CHO PHẦN CÂU HỎI --- */
+      .container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        background: radial-gradient(circle, #2c001e 0%, #000000 100%);
+        transition: opacity 1s ease;
+        padding: 20px;
+        box-sizing: border-box;
+      }
 
+      h1 {
+        font-size: 2.5rem;
+        color: #ff69b4;
+        text-shadow: 0 0 10px #ff69b4;
+        margin-bottom: 40px;
+        text-align: center;
+        pointer-events: none;
+        line-height: 1.5;
+      }
+
+      .btn-group {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        white-space: nowrap;
+        z-index: 101;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .btn-pink {
+        background-color: #ff3366;
+        color: white;
+        box-shadow: 0 0 15px #ff3366;
+        transition: transform 0.2s;
+      }
+
+      .btn-pink:hover {
+        transform: scale(1.1);
+      }
+      .btn-pink:active {
+        transform: scale(0.95);
+      }
+
+      #btn-no {
+        background-color: #555;
+        color: #ccc;
+        transition: top 0.1s ease-out, left 0.1s ease-out; /* Nút nhảy nhanh hơn chút */
+      }
+
+      input[type="text"] {
+        padding: 15px;
+        width: 80%;
+        max-width: 400px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        border: 2px solid #ff3366;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        outline: none;
+        text-align: center;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* --- CSS CHO CANVAS --- */
+      canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      #final-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff3366;
+        font-size: 5rem;
+        font-weight: bold;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 2s ease-in-out;
+        text-shadow: 0 0 20px rgba(255, 51, 102, 0.8);
+        font-family: "Brush Script MT", cursive;
+        z-index: 10;
+        width: 90%;
+        text-align: center;
+      }
+
+      .show-text {
+        opacity: 1 !important;
+      }
+      .heartbeat {
+        animation: heartbeat 1.5s infinite;
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @media (max-width: 768px) {
         h1 {
-            font-size: 2.5rem;
-            color: #ff69b4;
-            text-shadow: 0 0 10px #ff69b4;
-            margin-bottom: 40px;
-            text-align: center;
-            pointer-events: none;
-            line-height: 1.5;
+          font-size: 1.5rem;
+          margin-bottom: 20px;
         }
-
-        .btn-group {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            width: 100%;
-            flex-wrap: wrap; 
-        }
-
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            white-space: nowrap;
-            z-index: 101;
-            -webkit-tap-highlight-color: transparent; 
+          padding: 12px 20px;
+          font-size: 1rem;
         }
-
-        .btn-pink {
-            background-color: #ff3366;
-            color: white;
-            box-shadow: 0 0 15px #ff3366;
-            transition: transform 0.2s;
-        }
-        
-        .btn-pink:hover { transform: scale(1.1); }
-        .btn-pink:active { transform: scale(0.95); }
-
-        #btn-no {
-            background-color: #555;
-            color: #ccc;
-            transition: top 0.1s ease-out, left 0.1s ease-out; /* Nút nhảy nhanh hơn chút */
-        }
-
-        input[type="text"] {
-            padding: 15px;
-            width: 80%; 
-            max-width: 400px;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            border: 2px solid #ff3366;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            outline: none;
-            text-align: center;
-        }
-
-        .hidden { display: none !important; }
-
-        /* --- CSS CHO CANVAS --- */
-        canvas {
-            display: block;
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 1;
-        }
-
         #final-message {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ff3366;
-            font-size: 5rem;
-            font-weight: bold;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 2s ease-in-out;
-            text-shadow: 0 0 20px rgba(255, 51, 102, 0.8);
-            font-family: 'Brush Script MT', cursive;
-            z-index: 10;
-            width: 90%;
-            text-align: center;
+          font-size: 3rem;
         }
-
-        .show-text { opacity: 1 !important; }
-        .heartbeat { animation: heartbeat 1.5s infinite; }
-
-        @keyframes heartbeat {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
+        .btn-group {
+          gap: 15px;
         }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.5rem; margin-bottom: 20px; }
-            button { padding: 12px 20px; font-size: 1rem; }
-            #final-message { font-size: 3rem; }
-            .btn-group { gap: 15px; }
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <audio id="bg-music" loop>
-        <source src="nhacNen.mp3" type="audio/mpeg">
+      <source src="nhacNen.mp3" type="audio/mpeg" />
     </audio>
 
     <audio id="sfx-jump">
-        <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
+      <source
+        src="https://www.soundjay.com/buttons/sounds/button-16.mp3"
+        type="audio/mpeg"
+      />
     </audio>
 
     <div id="screen-1" class="container">
-        <h1>Bạn là ai?</h1>
-        <div class="btn-group">
-            <button id="btn-no"> con người </button>
-            <button id="btn-yes" class="btn-pink"> not humam   }
-
-        .show-text { opacity: 1 !important; }
-        .heartbeat { animation: heartbeat 1.5s infinite; }
-
-        @keyframes heartbeat {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.5rem; margin-bottom: 20px; }
-            button { padding: 12px 20px; font-size: 1rem; }
-            #final-message { font-size: 3rem; }
-            .btn-group { gap: 15px; }
-        }
-    </style>
-</head>
-<body>
-
-    <audio id="bg-music" loop>
-        <source src="nhacNen.mp3" type="audio/mpeg">
-    </audio>
-
-    <audio id="sfx-jump">
-        <source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="screen-1" class="container">
-        <h1>Bạn là ai?</h1>
-        <div class="btn-group">
-            <button id="btn-no"> con người </button>
-            <button id="btn-yes" class="btn-pink"> not human </button>
-        </div>
+      <h1>Bạn là ai?</h1>
+      <div class="btn-group">
+        <button id="btn-no">Con người</button>
+        <button id="btn-yes" class="btn-pink">không phải con người</button>
+      </div>
     </div>
 
     <div id="screen-2" class="container hidden">
-        <h1>Bạn có thực sự là con người không?<br></h1>
-        <input type="text" id="fake-input" placeholder="Nhập câu trả lời..." autocomplete="off">
-        <br><br>
-        <button id="btn-send" class="btn-pink">Gửi câu trả lời</button>
+      <h1>Bạn có thực sự là không phải con người không?<br /></h1>
+      <input
+        type="text"
+        id="fake-input"
+        placeholder="Nhập câu trả lời..."
+        autocomplete="off"
+      />
+      <br /><br />
+      <button id="btn-send" class="btn-pink">Gửi câu trả lời</button>
     </div>
 
-    <div id="final-message"> HA HA HA</div>
+    <div id="final-message">HA HA HA</div>
     <canvas id="canvas"></canvas>
 
     <script>
-        /* ================= XỬ LÝ ÂM THANH THÔNG MINH ================= */
+      /* ================= XỬ LÝ ÂM THANH THÔNG MINH ================= */
       const bgMusic = document.getElementById("bg-music");
       const sfxJump = document.getElementById("sfx-jump");
       bgMusic.volume = 0.6;
@@ -420,12 +428,6 @@
       }
 
       resize();
-    
     </script>
-</body>
+  </body>
 </html>
-
-
-
-
-
